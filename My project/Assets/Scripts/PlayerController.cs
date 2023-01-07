@@ -5,10 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float playerSpeed = 10.0f;
-    private float jumpPower = 10f;
+    private float jumpPower = 12.5f;
     private Collider2D coll;
-    private LayerMask jumpableGround;
-    private ContactFilter2D ContactFilter;
+    private LayerMask jumpableGround; 
     private SpriteRenderer sRender;
     private enum State { idle, running, jumping, falling }
     private State state = State.idle;
@@ -107,6 +106,7 @@ public class PlayerController : MonoBehaviour
         {
             state = State.idle;
         }
+        //checks movment to change states
     }
 
     private void Death()
@@ -120,6 +120,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Death"))
         {
             playerHealth = 0;
+            //checks for collission with invisible box at the bottom of the screen to kill the player
+        }
+
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            playerHealth--;         
         }
     }
 }
