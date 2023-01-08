@@ -171,16 +171,7 @@ public class PlayerController : MonoBehaviour
         {
             playerHealth = 0;
             //checks for collission with invisible box at the bottom of the screen to kill the player
-        }              
-
-        if (collision.gameObject.CompareTag("Health"))
-        {
-            if (playerHealth < 3)
-            {
-                playerHealth++;
-                //player health up 
-            }
-        }
+        }                      
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -203,6 +194,16 @@ public class PlayerController : MonoBehaviour
         {
             playerHealth--;            
             //player health down
+        }
+
+        if (collision.gameObject.CompareTag("Health"))
+        {
+            if (playerHealth < 3)
+            {
+                playerHealth++;
+                Destroy(collision.gameObject);
+                //player health up 
+            }
         }
     }
 

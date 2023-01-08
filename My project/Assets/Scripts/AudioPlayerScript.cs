@@ -19,9 +19,9 @@ public class AudioPlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PauseMenu.paused)
+        if (PauseMenu.paused || PlayerController.gameOverScreen)
         {
-            if (levelAudioSource.clip != pausedMusic)
+            if (levelAudioSource.clip != pausedMusic )
             {
                 float playTime = levelAudioSource.time;
                 levelAudioSource.Stop();
@@ -41,30 +41,6 @@ public class AudioPlayerScript : MonoBehaviour
                 levelAudioSource.Play();
                 levelAudioSource.time = playTime;
             }
-        }
-
-        if (PlayerController.gameOverScreen)
-        {
-            if (levelAudioSource.clip != pausedMusic)
-            {
-                float playTime = levelAudioSource.time;
-                levelAudioSource.Stop();
-                levelAudioSource.clip = pausedMusic;
-                levelAudioSource.Play();
-                levelAudioSource.time = playTime;
-            }
-        }
-        else
-        {
-            if (levelAudioSource.clip != levelMusic)
-            {
-
-                float playTime = levelAudioSource.time;
-                levelAudioSource.Stop();
-                levelAudioSource.clip = levelMusic;
-                levelAudioSource.Play();
-                levelAudioSource.time = playTime;
-            }
-        }
+        }       
     }
 }

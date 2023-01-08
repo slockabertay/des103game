@@ -20,7 +20,7 @@ public class PickupScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && PlayerController.playerHealth < 3) 
         {
-            Destroy(collision.gameObject);
+            transform.position = new Vector3(-20, 0, 0);
         }
     }
 
