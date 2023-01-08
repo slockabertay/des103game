@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3981730502263865664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.014, y: 0.63, z: 0}
-  m_LocalScale: {x: 0.9720128, y: 0.30448592, z: 0.4684399}
+  m_LocalPosition: {x: 10.55, y: 3.56, z: 0}
+  m_LocalScale: {x: 1.255549, y: 0.5014632, z: 0.6050838}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,7 +126,7 @@ PlatformEffector2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RotationalOffset: 0
-  m_UseOneWay: 0
+  m_UseOneWay: 1
   m_UseOneWayGrouping: 0
   m_SurfaceArc: 180
   m_UseSideFriction: 0
@@ -144,9 +144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed90d7659e85754180b4fb3d4c4be2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.001
+  movementSpeed: 0.02
   maxRight: 2
   maxLeft: 2
-  waitingTime: 500
+  waitingTime: 100
   timeWaited: 0
   position: {x: 0, y: 0, z: 0}

@@ -42,5 +42,29 @@ public class AudioPlayerScript : MonoBehaviour
                 levelAudioSource.time = playTime;
             }
         }
+
+        if (PlayerController.gameOverScreen)
+        {
+            if (levelAudioSource.clip != pausedMusic)
+            {
+                float playTime = levelAudioSource.time;
+                levelAudioSource.Stop();
+                levelAudioSource.clip = pausedMusic;
+                levelAudioSource.Play();
+                levelAudioSource.time = playTime;
+            }
+        }
+        else
+        {
+            if (levelAudioSource.clip != levelMusic)
+            {
+
+                float playTime = levelAudioSource.time;
+                levelAudioSource.Stop();
+                levelAudioSource.clip = levelMusic;
+                levelAudioSource.Play();
+                levelAudioSource.time = playTime;
+            }
+        }
     }
 }

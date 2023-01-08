@@ -16,11 +16,11 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rb;
     public Animator anim;
-    public int playerHealth;
+    public static int playerHealth;
     public GameObject gameoverScreenUI;
     public GameObject deathBox;
-    private bool onPlatform = false; 
-
+    private bool onPlatform = false;
+    public static bool gameOverScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
         jumpableGround = LayerMask.GetMask("Ground");
         sRender = gameObject.GetComponent<SpriteRenderer>();
         playerHealth = 3;
+        gameOverScreen = false;
     }
 
     // Update is called once per frame
@@ -153,6 +154,7 @@ public class PlayerController : MonoBehaviour
     {
         gameoverScreenUI.SetActive(true);
         Time.timeScale = 0f;
+        gameOverScreen = true;
         //death screen
     }
 

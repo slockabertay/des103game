@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameOver : MonoBehaviour
+public class PickupScript : MonoBehaviour
 {
-
-    public GameObject gameOverUI;   
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +16,12 @@ public class GameOver : MonoBehaviour
         
     }
 
-    public void Retry()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        gameOverUI.SetActive(false);
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(1);       
+        if (collision.gameObject.CompareTag("Player") && PlayerController.playerHealth < 3) 
+        {
+            Destroy(collision.gameObject);
+        }
     }
+
 }
