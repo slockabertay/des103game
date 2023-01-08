@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Ground
   - Death
+  - MovingPlatform
+  - Health
+  - Damage
+  - Start
+  - End
   layers:
   - Default
   - TransparentFX

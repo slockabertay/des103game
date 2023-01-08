@@ -26,10 +26,12 @@ public class MovingPlatform : MonoBehaviour
         position = transform.position;
     }
 
+   
     // Update is called once per frame
     void FixedUpdate()
-    {        
-
+    {
+        velocity = (transform.position - position) / Time.deltaTime;
+        position = transform.position;
         if (isWaiting == false)
         {
             MovePlatform();

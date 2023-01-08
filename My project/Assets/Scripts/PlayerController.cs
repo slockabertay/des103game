@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameObject gameoverScreenUI;
     public GameObject deathBox;
     private bool onPlatform = false;
+    private bool isFinished;
     public static bool gameOverScreen;
 
     // Start is called before the first frame update
@@ -31,39 +32,50 @@ public class PlayerController : MonoBehaviour
         sRender = gameObject.GetComponent<SpriteRenderer>();
         playerHealth = 3;
         gameOverScreen = false;
+        isFinished = false;
     }
 
     // Update is called once per frame
     void Update()
     {        
-        IsGrounded();
-        MovePlayer();
-
-        if(onPlatform)
-        {
-            PlatformAnimControl();
-        }
-        else
-        {
-            AnimControl();
-        }        
-
-        spriteDirection();
-        anim.SetInteger("state", (int)state);
-
-        if (Input.GetButton("Jump") && IsGrounded() == true)
-        {
-            Jump();
-        }
-                
+      
+                            
 
         if (playerHealth == 0)
         {
             Death();
         }
 
+        if (Input.GetKeyDown("r") && isFinished)
+        {
+            SceneChanger.loadLevel();
+        }
+
     }
 
+    private void FixedUpdate()
+    {
+        IsGrounded();
+        MovePlayer();
+
+        if (onPlatform)
+        {
+            PlatformAnimControl();
+        }
+        else
+        {
+            AnimControl();
+        }
+
+        spriteDirection();
+        anim.SetInteger("state", (int)state);
+
+
+        if (Input.GetButton("Jump") && IsGrounded() == true)
+        {
+            Jump();
+        }
+    }
 
 
 
@@ -179,13 +191,16 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("MovingPlatform"))
         {
             onPlatform = true;           
-        }
-        else
+        }          
+        //checks if the player is touching the moving platforms
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("MovingPlatform"))
         {
             onPlatform = false;
-        }    
-
-        //checks if the player is touching the moving platforms
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -204,6 +219,17 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.gameObject);
                 //player health up 
             }
+        }
+
+        if (collision.gameObject.CompareTag("Start"))
+        {
+            Timer.timerOn = true;
+        }
+
+        if (collision.gameObject.CompareTag("End"))
+        {
+            Timer.timerOn = false;
+            isFinished = true;
         }
     }
 

@@ -17,7 +17,7 @@ public class SceneChanger : MonoBehaviour
         
     }
 
-    public void loadLevel()
+    public static void loadLevel()
     {
 ;        SceneManager.LoadScene(1);
     }
