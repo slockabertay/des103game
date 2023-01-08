@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     public int playerHealth;
     public GameObject gameoverScreenUI;
     public GameObject deathBox;
+    private bool onPlatform = false; 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,11 +34,19 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-
+    {        
         IsGrounded();
         MovePlayer();
-        AnimControl();
+
+        if(onPlatform)
+        {
+            PlatformAnimControl();
+        }
+        else
+        {
+            AnimControl();
+        }        
+
         spriteDirection();
         anim.SetInteger("state", (int)state);
 
@@ -58,7 +69,15 @@ public class PlayerController : MonoBehaviour
     private void MovePlayer()
     {
         var horizontalInput = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(horizontalInput * playerSpeed, rb.velocity.y);
+        if (onPlatform == true)
+        {
+            rb.velocity = new Vector2(horizontalInput * playerSpeed + MovingPlatform.velocity.x, rb.velocity.y + MovingPlatform.velocity.y);        
+        }
+        else 
+        {
+            rb.velocity = new Vector2(horizontalInput * playerSpeed, rb.velocity.y);
+        }
+       
         //key A or D for left or right
     }
 
@@ -99,7 +118,7 @@ public class PlayerController : MonoBehaviour
             state = State.falling;
         }
         else if (rb.velocity.x * rb.velocity.x > 0)
-        {
+        {            
             state = State.running;
         }
         else
@@ -109,10 +128,39 @@ public class PlayerController : MonoBehaviour
         //checks movment to change states
     }
 
+    private void PlatformAnimControl()
+    {
+        if (rb.velocity.y - MovingPlatform.velocity.y > 0)
+        {
+            state = State.jumping;
+        }
+        else if (rb.velocity.y - MovingPlatform.velocity.y < 0)
+        {
+            state = State.falling;
+        }
+        else if ((rb.velocity.x - MovingPlatform.velocity.x) * (rb.velocity.x - MovingPlatform.velocity.x) > 0)
+        {
+            state = State.running;
+        }
+        else if (rb.velocity.x == MovingPlatform.velocity.x)
+        {
+            state = State.idle;
+        }
+        //because of added velocities I had to create another state controller taking the platforms velocity into account
+    }
+
     private void Death()
     {
         gameoverScreenUI.SetActive(true);
         Time.timeScale = 0f;
+        //death screen
+    }
+
+    public IEnumerator Flash()
+    {
+        sRender.color = Color.red;
+        yield return new WaitForSeconds(.01f);
+        sRender.color = Color.white;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -121,11 +169,46 @@ public class PlayerController : MonoBehaviour
         {
             playerHealth = 0;
             //checks for collission with invisible box at the bottom of the screen to kill the player
-        }
+        }              
 
+        if (collision.gameObject.CompareTag("Health"))
+        {
+            if (playerHealth < 3)
+            {
+                playerHealth++;
+                //player health up 
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            onPlatform = true;           
+        }
+        else
+        {
+            onPlatform = false;
+        }    
+
+        //checks if the player is touching the moving platforms
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("Damage"))
         {
-            playerHealth--;         
+            playerHealth--;            
+            //player health down
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            StartCoroutine(Flash());
         }
     }
 }
