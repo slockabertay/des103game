@@ -12,9 +12,9 @@ public class MainMenuAnimation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        sea.velocity = new Vector2(.1f, sea.velocity.y);
+        sea.velocity = new Vector2(.2f, sea.velocity.y);
 
         if(sea.position.x > 7.44f)
         {
