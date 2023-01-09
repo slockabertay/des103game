@@ -37,9 +37,7 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-      
-                            
+    {                                         
 
         if (playerHealth < 1)
         {
@@ -55,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         IsGrounded();
         MovePlayer();
 
@@ -75,12 +74,14 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+
     }
 
 
 
     private void MovePlayer()
     {
+
         var horizontalInput = Input.GetAxisRaw("Horizontal");
         if (onPlatform == true)
         {
@@ -96,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     private void spriteDirection()
     {
+
         if (rb.velocity.x < 0)
         {
             sRender.flipX = true;
@@ -175,6 +177,7 @@ public class PlayerController : MonoBehaviour
         sRender.color = Color.red;
         yield return new WaitForSeconds(.01f);
         sRender.color = Color.white;
+        //color overlay on player sprite flashes red to let the player know they've been damaged
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -201,6 +204,7 @@ public class PlayerController : MonoBehaviour
         {
             onPlatform = false;
         }
+        //platform tag check
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
