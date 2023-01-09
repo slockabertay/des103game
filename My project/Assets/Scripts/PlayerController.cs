@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
       
                             
 
-        if (playerHealth == 0)
+        if (playerHealth < 1)
         {
             Death();
         }
